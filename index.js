@@ -33,7 +33,7 @@ let Feed = mongoose.model("Feeds", feedSchema);
 
 
 async function getAllFeeds() {
-  const feeds = await Feed.find();
+  const feeds = await Feed.find().sort({likes:-1});
   return {status : 200,data:feeds}
 }
 
@@ -57,9 +57,9 @@ async function createUser(name,suggestion) {
   let result = await newfeed.save();
   if(result._id !=null || result !="")
   {
-    return ({status:true})
+    return (result)
   }else{
-    return ({status:false})
+    return (result)
   }
 }
 
@@ -82,7 +82,7 @@ async function updatefeed(id,type,count){
   const result =await feed.save()
   if(result._id !=null || result !="")
   {
-    return ({status:true})
+    return ({likes:result.likes,dislikes:result.dislikes})
   }else{
     return ({status:false})
   }
