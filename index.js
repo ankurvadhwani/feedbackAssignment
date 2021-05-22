@@ -1,11 +1,12 @@
 var express = require("express");
 var mongoose = require("mongoose");
+require('dotenv').config();
 var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-var ConnString =
-  "mongodb+srv://ankur:Nanwani0885522@cluster0.sdtwr.mongodb.net/Feedback_Assignment?retryWrites=true&w=majority";
-mongoose.connect(ConnString, {
+// var ConnString =
+//   "mongodb+srv://ankur:Nanwani0885522@cluster0.sdtwr.mongodb.net/Feedback_Assignment?retryWrites=true&w=majority";
+mongoose.connect(process.env.mongodburl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
