@@ -39,16 +39,16 @@ async function createUser() {
 }
 async function getAllFeeds() {
   const feeds = await Feed.find();
-  return feeds;
+  return {status : 200,data:feeds}
 }
 
 app.get("/ankut", (req, res) => {
   //createUser();
-  let x = getAllFeeds();
-  x.then((a) => {
-    console.log(a);
-  });
-  res.send({ name: "ankur" });
+  let x=getAllFeeds()
+
+  x.then(rs=>{
+    res.send(rs)
+  })
 });
 
 app.get("/", (req, res) => {
