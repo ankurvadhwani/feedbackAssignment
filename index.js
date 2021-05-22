@@ -1,9 +1,10 @@
 var express = require("express");
 var mongoose = require("mongoose");
-require('dotenv').config()
+var cors=require('cors')
 var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
 
 var ConnString =
   "mongodb+srv://ankur:Nanwani0885522@cluster0.sdtwr.mongodb.net/Feedback_Assignment?retryWrites=true&w=majority";
