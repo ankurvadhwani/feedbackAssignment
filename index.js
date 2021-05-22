@@ -31,21 +31,13 @@ const feedSchema = new mongoose.Schema({
 
 let Feed = mongoose.model("Feeds", feedSchema);
 
-async function createUser() {
-  let newfeed = new Feed({
-    name: "ankur",
-    likes: 10,
-    dislikes: 5
-  });
-  let result = await newfeed.save();
-  console.log(result);
-}
+
 async function getAllFeeds() {
   const feeds = await Feed.find();
   return {status : 200,data:feeds}
 }
 
-app.get("/ankut", (req, res) => {
+app.get("/getallfeeds", (req, res) => {
   //createUser();
   let x=getAllFeeds()
 
@@ -53,6 +45,58 @@ app.get("/ankut", (req, res) => {
     res.send(rs)
   })
 });
+
+
+async function createUser(name,suggestion) {
+  let newfeed = new Feed({
+    name: name,
+    suggestion:suggestion,
+    likes: 0,
+    dislikes: 0
+  });
+  let result = await newfeed.save();
+  if(result._id !=null || result !="")
+  {
+    return ({status:true})
+  }else{
+    return ({status:false})
+  }
+}
+
+app.post("/createfeed",(req,res)=>{
+  let name=req.body.name
+  let suggestion=req.body.suggestion
+  let x=createUser(name,suggestion)
+  x.then(output=>{
+    res.send(output)
+  })
+})
+
+async function updatefeed(id,type,count){
+  let feed=await Feed.findById(id)
+  if(!feed) return {status:false}
+  
+  if(type==='like')   feed.likes=count
+  if(type==='dislike') feed.dislikes=count
+  
+  const result =await feed.save()
+  if(result._id !=null || result !="")
+  {
+    return ({status:true})
+  }else{
+    return ({status:false})
+  }
+}
+
+app.post("/updatefeed",(req,res)=>{
+  let id=req.body.feedid
+  let type=req.body.type
+  let count=req.body.count
+  let r=updatefeed(id,type,count)
+  r.then(output=>{
+    res.send(output)
+  })
+})
 
 app.get("/", (req, res) => {
   res.send("hello");
