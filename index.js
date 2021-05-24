@@ -34,6 +34,7 @@ let Feed = mongoose.model("Feeds", feedSchema);
 
 async function getAllFeeds() {
   const feeds = await Feed.find().sort({likes:-1,dislikes:1});
+  console.log(feeds);
   return {status : 200,data:feeds}
 }
 
