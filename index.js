@@ -6,8 +6,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
 
+// change below link with you'r
 var ConnString =
-  "mongodb+srv://ankur:Nanwani0885522@cluster0.sdtwr.mongodb.net/Feedback_Assignment?retryWrites=true&w=majority";
+  "mongodb+srv://@cluster0.sdtwr.mongodb.net/Feedback_Assignment?retryWrites=true&w=majority";
 mongoose.connect(ConnString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
